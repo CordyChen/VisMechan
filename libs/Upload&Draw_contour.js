@@ -4,7 +4,7 @@ $(document).ready(function () {
     var progress = $("#progress1"); 
     var files = $("#files1"); 
     var btn = $("#btn1 span"); 
-	var file_name = '';
+    var file_name = '';
     $("#fileupload").wrap("<form id='myupload' action='PHP/File_upload.php' method='post' enctype='multipart/form-data'></form>"); 
     $("#fileupload").change(function(){ //选择文件 
         $("#myupload").ajaxSubmit({ 
