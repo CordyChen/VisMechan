@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="geomechanics.css" />
+<title>Online Calculation of Engineering Geology</title>
+
+<!--insert jquery.js-->
+<script type="text/javascript" src="jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="jquery.form.min.js"></script>
+
+
+<!--Insert Bokeh Style-->
+<link href="http://cdn.pydata.org/bokeh/release/bokeh-0.12.1.min.css" rel="stylesheet" type="text/css">
+<link href="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.1.min.css" rel="stylesheet" type="text/css">
+
+<!--Insert JQuery EasyUI js and css-->
+<script type="text/javascript" src="jquery-easyui-1.5/jquery.easyui.min.js"></script>
+<link href="easyui_modified.css" rel="stylesheet" type="text/css" />
+<link href="jquery-easyui-1.5/themes/icon.css" rel="stylesheet" type="text/css" />
+<link href="jquery-easyui-1.5/demo/demo.css" rel="stylesheet" type="text/css" />
+
+<!--Insert Bokeh js-->
+<script src="http://cdn.pydata.org/bokeh/release/bokeh-0.12.1.min.js"></script>
+<script src="http://cdn.pydata.org/bokeh/release/bokeh-widgets-0.12.1.min.js"></script>
+
+<!--Insert the javascript to draw contour-->
+<script type="text/javascript" src="Upload&Draw_contour.js"></script>
+
+<!--Insert the javascript to draw joints maps-->
+<script type="text/javascript" src="Draw_joints.js"></script>
+
+<!--Ajax script-->
+<script type="text/javascript">
+	$(document).ready(function() {
+        $("#submit").click(function() {
+            $.ajax({
+				url: "Draw_arc.php",
+				type:"POST",
+				data:{dip1:$("#dip1").val(),dia1:$("#dia1").val(),dip2:$("#dip2").val(),dia2:$("#dia2").val(),dips:$("#dips").val(),dias:$("#dias").val()},
+				dataType:"html",
+				error: function(){
+					alert('error loading xml doc.');
+				},
+				success: function(data) {
+					//alert(data);
+					$("#disp_1").html(data);
+				}
+			});
+		});
+    });
+</script>
+
+</head>
+
+
+
+<body>
+<div class="Titlebar" id="top"><h1 class="logo">Online Calculator</h1></div>
+<br />
+<div class="Container">
+<div class="Page-root">
+<div class="Page">
+<div class="easyui-tabs" plain=true border=false fit=true>
+
+<div class="Tab-select" title="Draw Stereogram">
+<br />
+<div class="Input-area" id="cont_1">
+<div class="Input-wrapper" style="border: 1px solid #dbdfd6; padding: 5px 0 2px 5px; margin-left: 5px">
+<form>
+<label>&nbsp*dip_1:&nbsp;&nbsp;</label><input class="easyui-numberspinner" data-options="min:0,max:360,precision:1,increment:10" id="dip1" type="text"/><br /><br />
+<label>&nbsp*dia_1:&nbsp;&nbsp;</label><input class="easyui-numberspinner" data-options="min:0,max:90,precision:1,increment:10" id="dia1" type="text"/><br /><br />
+<label>&nbsp*dip_2:&nbsp;&nbsp;</label><input class="easyui-numberspinner" data-options="min:0,max:360,precision:1,increment:10" id="dip2" type="text"/><br /><br />
+<label>&nbsp*dia_2:&nbsp;&nbsp;</label><input class="easyui-numberspinner" data-options="min:0,max:90,precision:1,increment:10" id="dia2" type="text"/><br /><br />
+<label>&nbsp*dip_s:&nbsp;&nbsp;</label><input class="easyui-numberspinner" data-options="min:0,max:360,precision:1,increment:10,required:true" id="dips" type="text"/><br /><br />
+<label>&nbsp*dia_s:&nbsp;&nbsp;</label><input class="easyui-numberspinner" data-options="min:0,max:90,precision:1,increment:10,required:true" id="dias" type="text"/><br /><br />
+<input class="Sub_icon" id="submit" type="button" value="Calculate" />
+</form>
+</div>
+</div>
+<div class="Disp-area" id="Disp_1">
+<div id="disp_1" style="float:right; margin:5px">
+</div>
+</div>
+
+</div>
+
+<div class="Tab-select" title="Topographic Map">
+<br />
+<div class="Input-area" id="cont_2">
+<div class="Input-wrapper" style="border: 1px solid #dbdfd6; padding: 5px 0 2px 5px; margin-left: 5px">
+<div class="btn" id="btn1"> 
+     <span>添加文件:&nbsp;</span> 
+     <input id="fileupload" type="file" name="myfile"> 
+</div> 
+<div class="progress" id="progress1"> 
+    <span class="bar" id="bar1"></span><span class="percent" id="percent1">0%</span >
+</div> 
+<div class="files" id="files1"></div>
+<input class='Sub_icon' id='sub_contour' type='button' value='Contour' />
+</div>
+</div>
+<div class="Disp-area" id="Disp_2">
+<div id="disp_2" style="float:right; margin:5px">
+</div>
+</div>
+
+</div>
+
+<div class="Tab-select" title="Joints Map">
+<br />
+<div class="Input-area" id="cont_3">
+<div class="Input-wrapper" style="border: 1px solid #dbdfd6; padding: 5px 0 2px 5px; margin-left: 5px">
+<div class="btn" id="btn2"> 
+     <span>添加文件:&nbsp;</span> 
+     <input id="fileupload2" type="file" name="myfile"> 
+</div> 
+<div class="progress" id="progress2"> 
+    <span class="bar" id="bar2"></span><span class="percent" id="percent2">0%</span >
+</div> 
+<div class="files" id="files2"></div>
+<input id='sub_density' type='button' value='Density' />&nbsp;
+<input id='sub_rose' type='button' value=' Rose ' />&nbsp;
+<input id='sub_joints_contour' type='button' value='Contour' />
+</div>
+</div>
+
+<div class="Disp-area" id="Disp_3">
+<div id="disp_3" style="float:right; margin:5px">
+</div>
+</div>
+<div class="Disp_p" id="disp_3p"></div>
+
+</div>
+
+<div class="Tab-select" title="FS Calculation">
+<br />
+<div class="Input-area" id="cont_4" style="width:100%">
+<div class="Input-wrapper" style="border: 1px solid #dbdfd6; padding: 10px 10px 10px 10px; margin-left: 5px; height:40%">
+
+<div class="FS-div">
+<label class="FS-label" for="dip-ein">&nbsp;*dip_1:&nbsp;&nbsp;</label><input class="easyui-numberspinner" data-options="min:0,max:360,precision:1,increment:10" id="dip-ein" type="text" value="115"/>
+</div>
+<div class="FS-div">
+<label class="FS-label" for="dia-ein">&nbsp;*dia_1:&nbsp;&nbsp;</label><input class="easyui-numberspinner" data-options="min:0,max:90,precision:1,increment:10" id="dia-ein" type="text" value="45"/>
+</div>
+<div class="FS-div">
+<label class="FS-label" for="dip-zwei">&nbsp;*dip_2:&nbsp;&nbsp;</label><input class="easyui-numberspinner" data-options="min:0,max:360,precision:1,increment:10" id="dip-zwei" type="text" value="235"/>
+</div>
+<div class="FS-div">
+<label class="FS-label" for="dia-zwei">&nbsp;*dia_2:&nbsp;&nbsp;</label><input class="easyui-numberspinner" data-options="min:0,max:90,precision:1,increment:10" id="dia-zwei" type="text" value="70"/>
+</div>
+<div class="FS-div">
+<label class="FS-label" for="dip-top">&nbsp;*dip_t:&nbsp;&nbsp;</label><input class="easyui-numberspinner" data-options="min:0,max:360,precision:1,increment:10,required:true" id="dip-top" type="text" value="195"/>
+</div>
+<div class="FS-div">
+<label class="FS-label" for="dia-top">&nbsp;*dia_t:&nbsp;&nbsp;</label><input class="easyui-numberspinner" data-options="min:0,max:90,precision:1,increment:10,required:true" id="dia-top" type="text" value="12"/>
+</div>
+<div class="FS-div">
+<label class="FS-label" for="dip-slope">&nbsp;*dip_s:&nbsp;&nbsp;</label><input class="easyui-numberspinner" data-options="min:0,max:360,precision:1,increment:10,required:true" id="dip-slope" type="text" value="185"/>
+</div>
+<div class="FS-div">
+<label class="FS-label" for="dia-slope">&nbsp;*dia_s:&nbsp;&nbsp;</label><input class="easyui-numberspinner" data-options="min:0,max:90,precision:1,increment:10,required:true" id="dia-slope" type="text" value="65"/>
+</div>
+<div class="FS-div">
+<label class="FS-label" for="dip-crack">&nbsp;*dip_c:&nbsp;&nbsp;</label><input class="easyui-numberspinner" data-options="min:0,max:360,precision:1,increment:10" id="dip-crack" type="text" value="165"/>
+</div>
+<div class="FS-div">
+<label class="FS-label" for="dia-crack">&nbsp;*dia_c:&nbsp;&nbsp;</label><input class="easyui-numberspinner" data-options="min:0,max:90,precision:1,increment:10" id="dia-crack" type="text" value="70"/>
+</div>
+<div class="FS-div">
+<label class="FS-label" for="slope-height">&nbsp;*h_slp:&nbsp;&nbsp;</label><input class="easyui-numberspinner" data-options="min:0,max:1000,precision:2,increment:10,required:true" id="slope-height" type="text" value="30.48"/>
+</div>
+
+<div class="FS-div">
+<label class="FS-label" for="gamma">&nbsp;*gamma:&nbsp;&nbsp;</label><input class="easyui-numberspinner" data-options="min:0,max:10000,precision:1,increment:10" id="gamma" type="text" value="2560.0"/>
+</div>
+<div class="FS-div">
+<label class="FS-label" for="gamma-water">&nbsp;*gamma-water:&nbsp;&nbsp;</label><input class="easyui-numberspinner" data-options="min:0,max:10000,precision:1,increment:10" id="gamma-water" type="text" value="1000.0"/>
+</div>
+<div class="FS-div">
+<label class="FS-label" for="C1">&nbsp;*C1:&nbsp;&nbsp;</label><input class="easyui-numberspinner" data-options="min:0,max:1000,precision:1,increment:10" id="C1" type="text" value="23.9"/>
+</div>
+<div class="FS-div">
+<label class="FS-label" for="fi1">&nbsp;*fi1:&nbsp;&nbsp;</label><input class="easyui-numberspinner" data-options="min:0,max:90,precision:1,increment:10" id="fi1" type="text" value="20"/>
+</div>
+<div class="FS-div">
+<label class="FS-label" for="C2">&nbsp;*C2:&nbsp;&nbsp;</label><input class="easyui-numberspinner" data-options="min:0,max:1000,precision:1,increment:10" id="C2" type="text" value="47.8"/>
+</div>
+<div class="FS-div">
+<label class="FS-label" for="fi2">&nbsp;*fi2:&nbsp;&nbsp;</label><input class="easyui-numberspinner" data-options="min:0,max:90,precision:1,increment:10" id="fi2" type="text" value="30"/>
+</div>
+<div class="FS-div">
+<label class="FS-label" for="L-crack">&nbsp;*L-crack:&nbsp;&nbsp;</label><input class="easyui-numberspinner" data-options="min:0,max:1000,precision:2,increment:10" id="L-crack" type="text" value="12.19"/>
+</div>
+<div class="FS-div">
+<label class="FS-label" for="overhanged">&nbsp;&nbsp;&nbsp;</label><input id="overhanged" type="checkbox" name="overhanged" />Overhanged
+</div>
+<div class="FS-div">
+<label class="FS-label" for="water">&nbsp;&nbsp;&nbsp;</label><input id="water" type="checkbox" name="water"/>Water condition
+</div>
+
+<input class="Sub_icon" id="sub-FS" type="button" value="Calculate" />
+
+
+</div>
+</div>
+<div class="Result" style="position:relative; clear:both; min-height:20px; padding-left:20px; margin: 30px 0px 30px 5px;border:1px solid #dbdfd6"><b>The Factor of Safety:&nbsp;</b><b id="FS-re" style="color:#F00"></b>
+</div>
+<div class="Disp-area" id="Disp_4" style="width:100%; min-height:50px">
+<div id="disp_4" style="float:right; margin:5px">
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
