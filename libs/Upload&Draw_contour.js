@@ -5,7 +5,7 @@ $(document).ready(function () {
     var files = $("#files1"); 
     var btn = $("#btn1 span"); 
 	var file_name = '';
-    $("#fileupload").wrap("<form id='myupload' action='PHP/File_upload.php' method='post' enctype='multipart/form-data'></form>"); 
+    $("#fileupload").wrap("<form id='myupload' action='.../PHP/File_upload.php' method='post' enctype='multipart/form-data'></form>"); 
     $("#fileupload").change(function(){ //选择文件 
         $("#myupload").ajaxSubmit({ 
             dataType:  'json', //数据格式为json 
@@ -41,7 +41,7 @@ $(document).ready(function () {
 			}
 		else{
             $.ajax({
-				url: "PHP/Draw_Contour.php",
+				url: ".../PHP/Draw_Contour.php",
 				type:"POST",
 				data:{filename: file_name},
 				dataType:"html",

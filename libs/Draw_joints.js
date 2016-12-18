@@ -5,7 +5,7 @@ $(document).ready(function () {
     var files = $("#files2"); 
     var btn = $("#btn2 span"); 
 	var file_name = '';
-    $("#fileupload2").wrap("<form id='myupload2' action='PHP/File_upload.php' method='post' enctype='multipart/form-data'></form>"); 
+    $("#fileupload2").wrap("<form id='myupload2' action='.../PHP/File_upload.php' method='post' enctype='multipart/form-data'></form>"); 
     $("#fileupload2").change(function(){ //选择文件 
         $("#myupload2").ajaxSubmit({ 
             dataType:  'json', //数据格式为json 
@@ -41,7 +41,7 @@ $(document).ready(function () {
 			}
 		else{
             $.ajax({
-				url: "PHP/Draw_Joints.php",
+				url: ".../PHP/Draw_Joints.php",
 				type:"POST",
 				data:{filename: file_name, method: "contour"},
 				dataType:"html",
@@ -62,7 +62,7 @@ $(document).ready(function () {
 			}
 		else{
             $.ajax({
-				url: "PHP/Draw_Joints.php",
+				url: ".../PHP/Draw_Joints.php",
 				type:"POST",
 				data:{filename: file_name, method: "rose"},
 				dataType:"html",
@@ -83,7 +83,7 @@ $(document).ready(function () {
 			}
 		else{
             $.ajax({
-				url: "PHP/Draw_Joints.php",
+				url: ".../PHP/Draw_Joints.php",
 				type:"POST",
 				data:{filename: file_name, method: "density"},
 				dataType:"html",

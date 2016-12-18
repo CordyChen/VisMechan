@@ -183,7 +183,7 @@ $(document).ready(function(e) {
 			}
 			mydata_2[11] = mydata[17];
 			$.ajax({
-				url:"PHP/Draw_3D.php",
+				url:".../PHP/Draw_3D.php",
 				type:"POST",
 				data: {data_3D: mydata_2},
 				dataType:"json",
