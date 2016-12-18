@@ -45,7 +45,7 @@ $(document).ready(function() {
 			}
 			if (mark == 0) {
 				$.ajax({
-					url: "PHP/FS.php",
+					url: ".../PHP/FS.php",
 					type: "POST",
 					data: {FS_data: mydata},
 					dataType:"html",
