@@ -6,6 +6,7 @@ $(document).ready(function () {
     var btn = $("#btn1 span"); 
 	var file_name = '';
     $("#fileupload").wrap("<form id='myupload' action='.../PHP/File_upload.php' method='post' enctype='multipart/form-data'></form>"); 
+
     $("#fileupload").change(function(){ //选择文件 
         $("#myupload").ajaxSubmit({ 
             dataType:  'json', //数据格式为json 
